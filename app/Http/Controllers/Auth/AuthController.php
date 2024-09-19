@@ -12,8 +12,11 @@ use App\Http\Requests\ForgotPasswordRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Hash;
 use App\Notifications\PasswordResetNotification;
+use Venturecraft\Revisionable\RevisionableTrait;
 class AuthController extends Controller
 {
+    use RevisionableTrait;
+    protected $revisionEnabled = true;
     public function register (Request $request) {
         $fields = $request->validate([
             'name' => 'required|max:255',
@@ -34,6 +37,7 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
         $user = User::where('email', $request->email)->first();
+        $history = $user->revisionHistory;
         if (!$user || !Hash::check($request->password, $user->password)) {
             return ["message" => "The provided credentials are incorrect."];
         }

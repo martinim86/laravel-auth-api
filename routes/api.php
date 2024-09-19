@@ -22,7 +22,9 @@ Route::post('/register','App\Http\Controllers\Auth\AuthController@register')->na
 Route::middleware('auth:sanctum')->post('/logout', 'App\Http\Controllers\Auth\AuthController@logout')->name('logout.api');
 Route::post('/forgot', 'App\Http\Controllers\Auth\AuthController@forgot')->name('forgot.api');
 Route::post('/reset', 'App\Http\Controllers\Auth\AuthController@reset')->name('reset.api');
-Route::apiResource('users', 'App\Http\Controllers\UserController')->middleware('auth:sanctum');
+//Route::apiResource('users', 'App\Http\Controllers\UserController')->middleware('auth:sanctum');
+Route::apiResource('users', 'App\Http\Controllers\UserController');
+
 Route::delete('/removeToCart/{user}', 'App\Http\Controllers\UserController@removeToCart')->name('removeToCart.api');
 Route::get('/usersInCart', 'App\Http\Controllers\UserController@usersInCart')->name('usersInCart.api');
 Route::patch('/recoverFromCart/{user}', 'App\Http\Controllers\UserController@recoverFromCart')->withTrashed()->name('recoverFromCart.api');

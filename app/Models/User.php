@@ -8,11 +8,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable,SoftDeletes,RevisionableTrait;
 
+
+    protected $revisionEnabled = true;
+    protected $historyLimit = 500; //Stop tracking revisions after 500 changes have been made.
     /**
      * The attributes that are mass assignable.
      *
@@ -43,4 +47,5 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
 }
